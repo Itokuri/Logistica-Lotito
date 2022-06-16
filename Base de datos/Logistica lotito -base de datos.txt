@@ -1,0 +1,64 @@
+CREATE DATABASE logistica_lotito
+
+CREATE TABLE Paquetes (
+    ID int (11),
+    Cliente VARCHAR (200),
+    Direcciòn VARCHAR (200),
+    Descripciòn VARCHAR (200),
+    Fragil BOOLEAN,
+    Fecha_de_compra DATE,
+    Fecha_de_entrega DATE,
+    PRIMARY KEY (ID) 
+    );
+
+CREATE TABLE conductor (
+    legajo int (11),
+    nombre VARCHAR (200),
+    apellido VARCHAR (200),
+    DNI INT (11),
+    licencia BOOLEAN,
+    telefono VARCHAR (200),
+    mail VARCHAR (200),
+    PRIMARY KEY (legajo)
+    );
+
+CREATE TABLE camiòn(
+    numero_de_placa varchar (200),
+    paquetes int(11),
+    conductor int(11),
+    destino varchar (200),
+    permiso boolean,
+    PRIMARY KEY (numero_de_placa),
+    FOREIGN KEY (paquete) REFERENCES paquete(ID),
+    FOREIGN KEY (conductor) REFERENCES conductor(legajo)
+
+);
+
+CREATE TABLE paquetes_perdidos (
+ID int (11),
+paquetes int(11),
+camiòn varchar(200),
+PRIMARY KEY (ID),
+FOREIGN KEY (paquetes) REFERENCES paquetes(ID),
+FOREIGN KEY (camiòn) REFERENCES camiòn(numero_de_placa)
+
+);
+
+CREATE TABLE almacen_jujuy(
+ID int (11),
+paquetes int (11),
+paquetes_perdidos int (11),
+PRIMARY KEY (ID),
+FOREIGN KEY (paquetes) REFERENCES paquetes(ID),
+FOREIGN KEY (paquetes_perdidos) REFERENCES paquetes_perdidos(ID)
+);
+
+
+
+CREATE TABLE almacen_tierra_del_fuego(
+ID int (11),
+paquetes int (11),
+PRIMARY KEY (ID),
+FOREIGN KEY (paquetes) REFERENCES paquetes(ID)     
+
+)
